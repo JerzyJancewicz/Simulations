@@ -1,0 +1,7 @@
+J:\PSM_Symulacje\PSM_Symulacje\rzut_ukośny\RzutUkośny\RzutUkośny\bin\Debug\RzutUkośny.exe
+J:\PSM_Symulacje\PSM_Symulacje\rzut_ukośny\RzutUkośny\RzutUkośny\bin\Debug\RzutUkośny.pdb
+J:\PSM_Symulacje\PSM_Symulacje\rzut_ukośny\RzutUkośny\RzutUkośny\obj\Debug\RzutUkośny.csproj.AssemblyReference.cache
+J:\PSM_Symulacje\PSM_Symulacje\rzut_ukośny\RzutUkośny\RzutUkośny\obj\Debug\RzutUkośny.csproj.SuggestedBindingRedirects.cache
+J:\PSM_Symulacje\PSM_Symulacje\rzut_ukośny\RzutUkośny\RzutUkośny\obj\Debug\RzutUkośny.csproj.CoreCompileInputs.cache
+J:\PSM_Symulacje\PSM_Symulacje\rzut_ukośny\RzutUkośny\RzutUkośny\obj\Debug\RzutUkośny.exe
+J:\PSM_Symulacje\PSM_Symulacje\rzut_ukośny\RzutUkośny\RzutUkośny\obj\Debug\RzutUkośny.pdb
