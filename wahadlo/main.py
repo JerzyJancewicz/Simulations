@@ -19,9 +19,8 @@ y = l * math.sin(alfa - math.radians(90))
 h = y + l
 V = l * omega
 
-
 Ep = math.fabs(m * g * h)
-Ek = (m * V)**2/2
+Ek = math.pow((m * V), 2)/2
 Ec = Ep + Ek
 
 EpList = []
@@ -29,21 +28,27 @@ EkList = []
 EcList = []
 OmegaList = []
 AlfaList = []
+EpList.append(Ep)
+EkList.append(Ek)
+EcList.append(Ec)
+OmegaList.append(omega)
+AlfaList.append(alfa)
+
 print("t  alfa  omega  eps  Da  Dw  x  y  h  V  Ep  Ek  Ec")
 while tp < 3:
     print(str(tp) + ' ' + str(alfa) + ' ' + str(omega) + ' ' + str(eps) + ' ' + str(Da) + ' ' + str(Dw) + ' ' + str(x) + ' ' + str(y) + ' ' + str(h) + ' ' + str(V) + ' ' + str(Ep) + ' ' + str(Ek) + ' ' + str(Ec))
-    Dw = eps * Dt
-    omega += Dw
-    Da = omega * Dt
     alfa += Da
+    omega += Dw
+    eps = g / l * math.sin(alfa)
+    Da = omega * Dt
+    Dw = eps * Dt
     x = l * math.cos(alfa - math.radians(90))
     y = l * math.sin(alfa - math.radians(90))
     h = y + l
     V = l * omega
     Ep = math.fabs(m * g * h)
-    Ek = (m * V) ** 2 / 2
+    Ek = math.pow((m * V), 2)/2
     Ec = Ep + Ek
-    eps = math.sin(alfa)
     tp += Dt
     EpList.append(Ep)
     EkList.append(Ek)
@@ -52,11 +57,10 @@ while tp < 3:
     AlfaList.append(alfa)
 
 TList = np.arange(0, len(EpList)*0.001, 0.001)
-# plt.plot(TList, EpList)
-# plt.plot(TList, EkList)
+plt.plot(TList, EpList)
+plt.plot(TList, EkList)
 plt.plot(TList, EcList)
 
-# plt.plot(TList, OmegaList)
-# plt.plot(TList, AlfaList)
+# plt.plot(AlfaList, OmegaList)
 
 plt.show()
