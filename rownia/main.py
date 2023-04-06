@@ -1,86 +1,94 @@
 import math
+
+import numpy as np
 import matplotlib.pyplot as plt
 
-g = 10
-Dt = 0.05
-t = 0
-r = 3
-m = 1
-h = 20
+#kula
+mk = 1
+rk = 3
+ikK = 2 / 5 * mk * rk ** 2
+wk = 0
+gammaK = 0
+bpK = 0
+sxK = 0
+vK = 0
+
+#sfera
+ms = 1
+rs = 3
+Iks = 2 / 3 * ms * rs ** 2
+ws = 0
+gammaS = 0
+bpS = 0
+sxS = 0
+vS = 0
+
 alfa = math.radians(45)
-Ik = 2/5*m*r**2 # kula
-Ik_sfery = 2/3*m*r**2 #sfera
-acc = g*math.sin(alfa)/(1+Ik/(m*r**2))
-eps = acc/r
-d90 = math.radians(90)
-length = 0 #pitagoras
+h = 20
+g = 10
 
-Sx = 0
-Sy = r
-V = 0
-DSx = V*Dt
-Dv = acc*Dt
-xr = Sx*math.cos(-alfa)-Sy*math.sin(-alfa)
-yr = Sx*math.sin(-alfa) + Sy*math.cos(-alfa) + h
-b = 0
-w = 0
-Db = w*Dt
-Dw = eps * Dt
-x = r * math.cos(d90 - b) + xr
+syS = 2
+t = 0
+dt = 0.05
+maxT = 5
+n = int(maxT / dt)
 
-Sx_List = []
+sxS_list = np.zeros(n)
+syS_list = np.zeros(n)
+gammaS_list = np.zeros(n)
 
-def ik_object(object):
-    if(object):
-        return 2 / 5 * m * r ** 2
-    else:
-        return 2 / 3 * m * r ** 2
+sxK_list = np.zeros(n)
+syK_list = np.zeros(n)
+gammaK_list = np.zeros(n)
+t_list = np.zeros(n)
 
 
-# def mid_point(t, Sx, Dsx, V, Dv, b, w, Db):
-#     Sx += Dsx
-#     V += Dv
-#     Dsx = V * Dt
-#     xr = Sx * math.cos(-alfa) - Sy*math.sin(-alfa)
-#     yr = Sx * math.sin(-alfa) + Sy*math.cos(-alfa) + h
-#     b += Db
-#     w += Dw
-#     Db = w * Dt
-#     x = r * math.cos(d90-b) + xr
-#     y = r * math.sin(d90 - b) + yr
-#     Sx_List.append(Sx)
-
-t_List = []
-Vd = 0
-
-while t < 3.35:
-    V += Dv
-    Sx += DSx
-    acc = g * math.sin(alfa) / (1 + Ik / (m * r ** 2))
-    Vd = acc * Dt / 2
-    DSx = (V + Vd) * Dt
-    Dv = acc * Dt
-    xr = Sx * math.cos(-alfa) - Sy * math.sin(-alfa)
-    yr = Sx * math.sin(-alfa) + Sy * math.cos(-alfa) + h
-    b += Db
-    w += Dw
-    Db = w * Dt
-    x = r * math.cos(d90 - b) + xr
-    y = r * math.sin(d90 - b) + yr
-    Sx_List.append(Sx)
-    print("s")
-    t_List.append(t)
-    t += Dt
-    print(Sx)
+def linear(ik, m, r, v, sx):
+    acc = g * np.sin(alfa) / (1 + ik / (m * r ** 2))
+    vd = acc * dt / 2
+    dSx = (v + vd) * dt
+    dV = acc * dt
+    sx += dSx
+    v += dV
+    sy = r
+    return sx, v, sy, acc
 
 
-x = [0, 20]
-y = [20, 0]
+def rotational(r, w, acc, bp):
+    eps = acc / r
+    dw = eps * dt
+    db = (w + dw / 2) * dt
+    b = bp + db
+    gamma = math.pi / 2 - b
+    w += dw
+    return gamma, w, db, b
 
 
-plt.plot(t_List, Sx_List)
+for x in range(n):
+    sxK, vK, syK, accK = linear(ikK, mk, rk, vK, sxK)
+    gammaK, wk, dbk, bpK = rotational(rk, wk, accK, bpK)
 
-plt.xlim(0, 10)
-plt.ylim(0, 30)
+    sxS, vS, syS, accS = linear(Iks, ms, rs, vS, sxS)
+    gammaS, ws, dbS, bpS = rotational(rs, ws, accS, bpS)
+
+    sxS_list[x] = sxS
+    gammaS_list[x] = gammaS
+    syS_list[x] = syS
+
+    sxK_list[x] = sxK
+    syK_list[x] = syK
+    gammaK_list[x] = gammaK
+
+    t_list[x] = t
+    t += dt
+
+
+# plt.plot(t_list, sxS_list)
+# plt.plot(t_list, syS_list)
+# plt.plot(t_list, gammaS_list)
+#
+# plt.plot(t_list, sxK_list)
+# plt.plot(t_list, syK_list)
+# plt.plot(t_list, gammaK_list)
 
 plt.show()
